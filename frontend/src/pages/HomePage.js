@@ -1,33 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+// == IMPORT ACTIONS
+import { listProducts } from '../actions/productActions';
 
 //==IMPORT COMPONENTS
 import Product from '../components/Product';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
+
 const HomePage = () => {
 
-    // STATE of the HomePage
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
+    // Get STATE from the STORE
+    const productList = useSelector((state) => state.productList);
+    const { loading, error, products } = productList;
+    const dispatch = useDispatch();
 
-    // AJAX request to backend
+    // DISPATCH action creator for AJAX request to fetch the data
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const { data } = await axios.get('/api/products');
-                setLoading(false);
-                setProducts(data);
-            } catch (error) {
-                setError(error.message);
-                setLoading(false);
-            }
-
-        };
-        fetchData();
+        dispatch(listProducts());
     }, []);
 
     return (
