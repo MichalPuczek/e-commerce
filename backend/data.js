@@ -1,10 +1,25 @@
+import bcrypt from 'bcryptjs';
+
 const data = {
+    users: [
+        {
+            name: 'Michal',
+            email: 'admin@gmail.com',
+            password: bcrypt.hashSync('1234', 8),
+            isAdmin: true,
+        },
+        {
+            name: 'John',
+            email: 'user@gmail.com',
+            password: bcrypt.hashSync('1234', 8),
+            isAdmin: false,
+        },
+    ],
     products: [
         {
-            _id: '1',
             name: 'Slim Shirt 1',
             category: 'Shirts',
-            image: '/images/p1.jpg',
+            image: '/images/icade.jpg',
             price: 120,
             countInStock: 10,
             brand: 'Nike',
@@ -13,7 +28,6 @@ const data = {
             description: 'high quality product',
         },
         {
-            _id: '2',
             name: 'Slim Shirt 2',
             category: 'Shirts',
             image: '/images/p2.jpg',
@@ -25,7 +39,6 @@ const data = {
             description: 'high quality product',
         },
         {
-            _id: '3',
             name: 'Slim Shirt 3',
             category: 'Shirts',
             image: '/images/p3.jpg',
@@ -37,7 +50,6 @@ const data = {
             description: 'high quality product',
         },
         {
-            _id: '4',
             name: 'Slim Shirt 4',
             category: 'Shirts',
             image: '/images/p4.jpg',
@@ -49,7 +61,6 @@ const data = {
             description: 'high quality product',
         },
         {
-            _id: '5',
             name: 'Slim Shirt 5',
             category: 'Shirts',
             image: '/images/p5.jpg',
@@ -61,7 +72,6 @@ const data = {
             description: 'high quality product',
         },
         {
-            _id: '6',
             name: 'Slim Shirt 6',
             category: 'Shirts',
             image: '/images/p6.jpg',

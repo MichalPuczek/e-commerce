@@ -1,23 +1,38 @@
 import express from 'express';
-import data from './data.js';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
+// IMPORT == ROUTERS
+import productRouter from './routers/productRouter.js';
+import userRouter from './routers/userRouter.js';
+
+dotenv.config();
 
 const app = express();
 
-app.get('/api/products', (req, res) => {
-    res.send(data.products);
+// Parsing the body of http request
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Connecting to MONGODB
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/geekstore', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
 });
 
-app.get('/api/products/:id', (req, res) => {
-    const product = data.products.find((product) => product._id === req.params.id);
-    if (product) {
-        res.send(product);
-    } else {
-        res.status(404).send({ message: 'Product not found' });
-    }
-});
+// USERS
+app.use('/api/users', userRouter);
+// PRODUCTS
+app.use('/api/products', productRouter);
 
 app.get('/', (req, res) => {
     res.send('Server is ready');
+});
+
+// MW = error catcher
+app.use((err, req, res, next) => {
+    res.status(500).send({ message: err.message });
 });
 
 const port = process.env.PORT || 5000;

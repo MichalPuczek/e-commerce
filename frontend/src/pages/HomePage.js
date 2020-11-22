@@ -20,7 +20,7 @@ const HomePage = () => {
     // DISPATCH action creator for AJAX request to fetch the data
     useEffect(() => {
         dispatch(listProducts());
-    }, []);
+    }, [dispatch]);
 
     return (
         <div>
